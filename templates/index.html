@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Computer Vision</title>
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
+  <!-- Fontawesome CSS -->
+  <link rel="stylesheet" href="/static/vendor/fontawesome/css/all.css">
+  <!-- Custom styles for this template -->
+  <link href="/static/css/vision.css" rel="stylesheet">
+  <!--favicon-->
+  <link rel="icon" type="image/png" href="/static/img/comm.png">
+  <!-- JQuery -->
+  <script src="/static/vendor/jquery/jquery.min.js"></script> 
+  <!-- Latest compiled JavaScript -->
+  <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/static/vendor/socketio/socket.io.js"></script>
+  <script src="/static/vendor/customfile/bs-custom-file-input.min.js"></script>
+  <script src="/static/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+  <script type="text/javascript" src="/static/js/application.js"></script>
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+    <!-- Navigation -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="#">TopTech Analytics</a>
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item" style="width:8em;">
+                <a class="nav-link" href="#" style="text-align: center">Menu1</a>
+              </li>
+              <li class="nav-item" style="width:8em;">
+                <a class="nav-link" href="#" style="text-align: center">Menu2</a>              
+              </li>
+              <li class="nav-item dropdown" style="width:8em;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"style="text-align: center">
+                  Source
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownPortfolio" style="width:300%;">
+                  <div class="dropdown-divider" ></div> 
+                  <div class="dropdown-header" style="color: #428bca">Video Source</div> 
+                  <a class="dropdown-item source" href="#" onclick="playWebCam();">Web Cam</a>
+                  <a class="dropdown-item source" href="#" onclick="playYouTube();">YouTube URL</a>
+                  <a class="dropdown-item source" href="#" onclick="playVideoFile();">Video File</a>
+                  <div class="dropdown-divider" ></div> 
+                  <div class="dropdown-header" style="color: #428bca">URL or File Path</div> 
+                  <div class="rounded" >
+                    <input type="text" class="form-control side-nav" id="sourceInput" name="sourceInput" style=" width:90%; margin-left:5%; text-align: center;">
+                  </div>
+                  <div class="dropdown-divider" ></div> 
+                </div>
+              </li>
+
+              <li class="nav-item dropdown" style="width:8em;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-align: center">
+                  Detection
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownPortfolio">
+                  <div class="dropdown-divider" ></div> 
+                  <div class="dropdown-header" style="color: #428bca">Face Detectors</div> 
+                  <a class="dropdown-item detect" href="#" onclick="detector('Haar');">Haar OpenCV</a>
+                  <a class="dropdown-item detect" href="#" onclick="detector('DNN');">DNN OpenCV</a>
+                  <a class="dropdown-item detect" href="#" onclick="detector('HoG');">HoG Dlib</a>
+                  <a class="dropdown-item detect" href="#" onclick="detector('CNN');">CNN Dlib</a>
+                  <div class="dropdown-divider" ></div> 
+                </div>
+              </li>
+              <li class="nav-item dropdown" style="width:8em;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-align: center">
+                  Classification
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownPortfolio">
+                  <div class="dropdown-divider" ></div> 
+                  <div class="dropdown-header" style="color: #428bca">Face Classification</div> 
+                  <a class="dropdown-item classify" href="#">kNN Clustering</a>
+                  <a class="dropdown-item classify" href="#">SVM</a>
+                  <a class="dropdown-item classify" href="#">Dlib</a>
+                  <div class="dropdown-divider" ></div> 
+                </div>
+              </li>
+
+              <li class="nav-item dropdown" style="width:8em;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-align: center">
+                  Tracking
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownPortfolio">
+                  <div class="dropdown-divider" ></div> 
+                  <div class="dropdown-header" style="color: #428bca">Object Tracking</div> 
+                  <a class="dropdown-item track" href="#" onclick="tracker(MOSSE);">MOSSE</a>
+                  <a class="dropdown-item track" href="#" onclick="tracker(DCORR);">Dlib Correlation</a>
+                  <a class="dropdown-item track" href="#" onclick="tracker(CNN1);">CNN 1</a>
+                  <a class="dropdown-item track" href="#" onclick="tracker(CNN2);">CNN 2</a>
+                  <div class="dropdown-divider" ></div> 
+                </div>
+              </li>
+              <li class="nav-item" style="width:8em;">
+                <a class="nav-link" href="#" style="text-align: center" onclick="selectTrack()">Track Select</a>              
+              </li>
+              <li class="nav-item dropdown" style="width:8em;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-align: center">
+                  File
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownPortfolio" style="width:300%;">
+                  <div class="dropdown-divider" ></div> 
+                  <div id="saveFileForm">
+                      <div class="dropdown-header" style="color: #428bca">Video Input File</div> 
+                      <div class="form-group side-nav">
+                          <input type="text" class="form-control side-nav" id="inFile" name="inFile" style=" width:90%; margin-left:5%; text-align: center;" >
+                        </div>
+                      <div class="dropdown-divider" ></div>
+                      <div class="dropdown-header" style="color: #428bca">Video Output File</div> 
+                      <div class="form-group side-nav">
+                        <input type="text" class="form-control side-nav" id="outFile" name="outFile" style=" width:90%; margin-left:5%; text-align: center;" >
+                      </div>
+                      <div class="dropdown-divider" ></div>
+                      <div class="dropdown-header" style="color: #428bca">Default File Path</div> 
+                      <div class="form-group side-nav">
+                        <input type="text" class="form-control side-nav" id="fpath" name="fpath" style=" width:90%; margin-left:5%; text-align: center;" >
+                      </div>
+                      <div class="dropdown-divider" ></div>
+                      <button id="saveFileButton" class="btn btn-primary" onclick="saveFile()" style=" width:40%; margin-left:30%; text-align: center;">Submit</button>
+                    </div>
+                  <div class="dropdown-divider" ></div> 
+                </div>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+  <div class='container-fluid'>
+    <div class="row">
+      <div class="col-md-2">
+       
+        <!-- Divider -->
+        <hr class="sidebar-divider" style="margin-top: 1em; margin-bottom: 1em;">
+      
+        <div class="rounded">
+          <h5 class="side-nav">Video Parameters:</h5>
+          <div>
+            <div class="form-group side-nav">
+              <label for="fps">Frames per second:</label> 
+              <input type="text" class="form-control side-nav" id="fps" name="fps" style="text-align: center" >
+            </div>
+            <div class="form-group side-nav">
+              <label for="delay">Frame interval (ms):</label> 
+              <input type="text" class="form-control side-nav" id="delay" name="delay" style="text-align: center" >
+            </div>
+            <div class="form-group side-nav">
+              <label for="fwidth">Frame width (px):</label> 
+              <input type="text" class="form-control  side-nav" id="fwidth" name="fwidth" style="text-align: center" >
+            </div>
+            <div class="form-group side-nav">
+              <label for="fheight">Frame height (px):</label> 
+              <input type="text" class="form-control side-nav" id="fheight" name="fheight" style="text-align: center" >
+            </div>
+            <div class="form-group side-nav">
+              <label for="frameNum">Number of Frames:</label> 
+              <input type="text" class="form-control  side-nav" id="fnumber" name="fnumber" style="text-align: center" >
+            </div>
+            <div class="form-group side-nav">
+              <label for="frameNum">Relative Play Speed:</label> 
+              <input type="text" class="form-control  side-nav" id="fplay" name="fplay" style="text-align: center" >
+            </div>
+          </div>
+        </div>
+        <hr class="sidebar-divider">
+
+      </div>
+
+      <div class="col-md-8" id="colmd8">
+
+        <img class="img-thumbnail" id="cvision" style="margin-top: 1em;">
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped active bg-light" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="color: black; width: 0%"></div>
+        </div>
+
+        <div class="btn-group  justify-content-sm-center" role="group" aria-label="Vision Buttons" style="width:20%; left: 50%; margin-left: -10%; margin-top: 1em;">
+          <button type="button" class="btn btn-info btn-rounded" onclick="slow();"><i class="fas fa-step-backward fa-lg" aria-hidden="true" style="margin:auto"></i></button>
+          <button type="button" class="btn btn-info btn-rounded" onclick="pause();"><i class="far fa-pause-circle fa-lg" aria-hidden="true" style="margin:auto"></i></button>
+          <button type="button" class="btn btn-info btn-rounded" onclick="play();"><i class="far fa-play-circle fa-lg" aria-hidden="true" style="margin:auto"></i></button>
+          <button type="button" class="btn btn-info btn-rounded" onclick="stop();"><i class="far fa-stop-circle fa-lg" aria-hidden="true" style="margin:auto"></i></button>
+          <button type="button" class="btn btn-info btn-rounded" onclick="fast();"><i class="fas fa-step-forward fa-lg" aria-hidden="true" style="margin:auto"></i></button>
+        </div>
+
+        <div class="form-group shadow-textarea" style="margin-top: 2em">
+          <textarea class="form-control z-depth-1" id="messageBox" rows="1" placeholder="Program status..." style="text-align: center"></textarea>
+        </div>
+        
+      </div>
+
+    <div class="col-md-2"></div>
+  
+  </div>
+
+<!-- Footer -->
+<hr class="sidebar-divider" style="margin-top: 1em; margin-bottom: 1em;">
+<footer class="py-0 bg-white">
+  <div class="container">
+    <p class="m-0 text-center text-primary">Copyright &copy; TopTech Analytics 2019</p>
+  </div>
+</footer>
+
+</body>
+
+</html>
